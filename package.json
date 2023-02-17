@@ -1,0 +1,23 @@
+{
+  "name": "crud-adm-postgres",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Kenzie-Academy-Brasil-Developers/crud-adm-postgres.git",
+  "author": "Ana Carolina <carol.oliva.cruz@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --ignore-watch node_modules --rs --cls server.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/pg": "^8.6.6",
+    "@types/pg-format": "^1.0.2",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "pg": "^8.9.0",
+    "pg-format": "^1.0.4"
+  }
+}
