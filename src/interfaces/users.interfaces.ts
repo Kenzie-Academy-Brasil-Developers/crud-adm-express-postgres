@@ -1,18 +1,13 @@
 import { QueryResult } from "pg";
+import { z } from "zod";
+import { allUsersSchema, createUserSchema, returnUserSchema } from "../schemas/users.schemas";
 
-interface IUser {
-  name: string;
-  email: string;
-  password: string;
-  admin: boolean;
-  active: boolean;
-}
+type IUserRequest = z.infer<typeof createUserSchema>
+type IUser = z.infer<typeof returnUserSchema>
 
-interface IUserId extends IUser {
-    id: number;
-}
-
-type IUserWithoutPassword = Omit<IUser, "password">
+type IUserWithoutPassword = Omit<IUser, 'password'>
 type IUserResult = QueryResult<IUserWithoutPassword>
+type IUserResultWithPassword = QueryResult<IUser>
+type IAllUsersReturn = z.infer<typeof allUsersSchema>
 
-export { IUser, IUserId, IUserWithoutPassword, IUserResult};
+export { IUserRequest, IUser, IUserResultWithPassword, IUserWithoutPassword, IUserResult, IAllUsersReturn};

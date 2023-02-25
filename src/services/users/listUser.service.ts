@@ -3,24 +3,21 @@ import format from "pg-format";
 import { client } from "../../database";
 import { IUserWithoutPassword } from "../../interfaces/users.interfaces";
 
-const listUserService = async (
-  userId: number
-): Promise<IUserWithoutPassword> => {
-    
+const listUsersService = async (): Promise<IUserWithoutPassword[]> => {
   const query: string = format(
     `
     SELECT
-        *
+        id, id, name, email, admin, active
     FROM
-        users
-    WHERE
-        id = ${userId};
+        users;
     `
   );
 
   const queryResult: QueryResult = await client.query(query);
 
-  return queryResult.rows[0];
+  const users: IUserWithoutPassword[] = queryResult.rows;
+
+  return users;
 };
 
-export default listUserService;
+export default listUsersService;
