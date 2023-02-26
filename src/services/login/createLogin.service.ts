@@ -10,9 +10,9 @@ import "dotenv/config";
 const createLoginService = async (
   loginData: ILoginRequest
 ): Promise<string> => {
-console.log(loginData.email);
+  console.log(loginData.email);
 
-const queryString: string = `
+  const queryString: string = `
 SELECT
     *
 FROM
@@ -21,13 +21,13 @@ WHERE
     email = $1;
 `;
 
-const queryConfig: QueryConfig = {
-text: queryString,
-values: [loginData.email],
-};
+  const queryConfig: QueryConfig = {
+    text: queryString,
+    values: [loginData.email],
+  };
 
-const queryResult: IUserResultWithPassword = await client.query(queryConfig);
-console.log(queryResult);
+  const queryResult: IUserResultWithPassword = await client.query(queryConfig);
+  console.log(queryResult);
 
   if (queryResult.rowCount === 0) {
     throw new AppError("Wrong email or password", 401);
@@ -38,15 +38,23 @@ console.log(queryResult);
     queryResult.rows[0].password
   );
 
+  console.log("--------");
+  console.log(matchPassword);
+  console.log("--------");
   if (!matchPassword) {
     throw new AppError("Wrong email or password", 401);
   }
 
   const token: string = jwt.sign(
-    { expiresIn: "24h", subject: queryResult.rows[0].id.toString() } as IJwtPayload,
-    process.env.SECRET_KEY!
+    {
+      email: queryResult.rows[0].email,
+    },
+    "secret",
+    {
+      expiresIn: "24h",
+      subject: queryResult.rows[0].id.toString()
+    }
   );
-console.log(token);
 
   return token;
 };

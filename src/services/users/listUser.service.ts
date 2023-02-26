@@ -1,13 +1,13 @@
 import { QueryResult } from "pg";
 import format from "pg-format";
 import { client } from "../../database";
-import { IUserWithoutPassword } from "../../interfaces/users.interfaces";
+import { IAllUsersReturn, IUserWithoutPassword } from "../../interfaces/users.interfaces";
 
-const listUsersService = async (): Promise<IUserWithoutPassword[]> => {
+const listUsersService = async (): Promise<IAllUsersReturn> => {
   const query: string = format(
     `
     SELECT
-        id, id, name, email, admin, active
+       *
     FROM
         users;
     `
@@ -15,7 +15,7 @@ const listUsersService = async (): Promise<IUserWithoutPassword[]> => {
 
   const queryResult: QueryResult = await client.query(query);
 
-  const users: IUserWithoutPassword[] = queryResult.rows;
+  const users: IAllUsersReturn = queryResult.rows;
 
   return users;
 };

@@ -4,11 +4,14 @@ import {
 import { client } from "../../database";
 import format from "pg-format";
 import { returnUserSchemaWithoutPassword } from "../../schemas/users.schemas";
+import { hash } from 'bcryptjs'
 
 const createUsersService = async (
   userData: IUserRequest
 ): Promise<IUserWithoutPassword> => {
  
+  const hashePass = await hash(userData.password,5)
+  userData.password = hashePass
   // const queryUserExist: string = `
   //     SELECT
   //         *
