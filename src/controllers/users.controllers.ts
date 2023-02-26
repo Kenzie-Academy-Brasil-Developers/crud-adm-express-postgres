@@ -7,19 +7,19 @@ const createUsersController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-
   const userData: IUser = req.body;
-
-  const newUser = await createUsersService(userData);
-
-  return res.status(201).json(newUser);
+  try {
+    const newUser = await createUsersService(userData);
+    return res.status(201).json(newUser);
+  } catch (error: any) {
+    return res.status(400).send({ error: error.message });
+  }
 };
 
 const listUsersController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
- 
   const users = await listUsersService();
 
   return res.json(users);
