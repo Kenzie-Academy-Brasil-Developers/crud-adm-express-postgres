@@ -47,7 +47,7 @@ WHERE
 
   const token: string = jwt.sign(
     {
-      email: queryResult.rows[0].email,
+      admin: queryResult.rows[0].admin,
     },
     "secret",
     {
