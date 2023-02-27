@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createUsersController,
+  listUserController,
   listUsersController,
 } from "../controllers/users.controllers";
 import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware";
@@ -14,5 +15,6 @@ userRoutes.get(
   ensureOwnerMiddleware,
   listUsersController
 );
+userRoutes.get("/profile", ensureTokenIsValidMiddleware, listUserController)
 
 export default userRoutes;

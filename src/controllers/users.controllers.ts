@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import createUsersService from "../services/users/createUsers.service";
-import listUsersService from "../services/users/listUser.service";
+import listUsersService from "../services/users/listAllUsers.service";
 import { IUser } from "../interfaces/users.interfaces";
+import listUserService from "../services/users/listUser.service";
 
 const createUsersController = async (
   req: Request,
@@ -25,4 +26,19 @@ const listUsersController = async (
   return res.json(users);
 };
 
-export { createUsersController, listUsersController };
+const listUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  console.log("-------------");
+  console.log(req.user.sub);
+  console.log("--------------");
+
+  const userId: any = req.user.sub;
+
+  const users = await listUserService(userId);
+
+  return res.json(users);
+};
+
+export { createUsersController, listUsersController, listUserController };

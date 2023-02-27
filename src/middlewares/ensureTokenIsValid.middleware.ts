@@ -11,12 +11,12 @@ const ensureTokenIsValidMiddleware = async (
   let token = req.headers.authorization;
 
   if (!token) {
-    throw new AppError("Token is missing", 401);
+    throw new AppError("Token is missing", 403);
   }
 
   token = token.split(" ")[1];
 
-  jwt.verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
+  jwt.verify(token, "secret", (error, decoded: any) => {
     if (error) {
       throw new AppError(error.message, 401);
     }
@@ -25,8 +25,8 @@ const ensureTokenIsValidMiddleware = async (
       admin: decoded.admin,
       isActive: decoded.isActive,
       mail: decoded.mail,
-      sub: parseInt(decoded.sub),
-    };
+      sub: parseInt(decoded.sub)
+    }
 
     return next();
   });
