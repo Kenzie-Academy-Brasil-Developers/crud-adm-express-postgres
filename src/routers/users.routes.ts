@@ -5,10 +5,9 @@ import {
 } from "../controllers/users.controllers";
 import ensureTokenIsValidMiddleware from "../middlewares/ensureTokenIsValid.middleware";
 import ensureOwnerMiddleware from "../middlewares/ensureOwner.middlewares";
-import ensureEmailExistMiddleware from "../middlewares/ensureEmailExist.middleware"
 const userRoutes: Router = Router();
 
-userRoutes.post("", ensureEmailExistMiddleware, createUsersController);
+userRoutes.post("", createUsersController);
 userRoutes.get(
   "",
   ensureTokenIsValidMiddleware,
