@@ -14,7 +14,7 @@ import ensureEmailAlreadyMiddleware from "../middlewares/ensureEmailAlready.midd
 
 const userRoutes: Router = Router();
 
-userRoutes.post("", createUsersController);
+userRoutes.post("", ensureEmailAlreadyMiddleware, createUsersController);
 userRoutes.get(
   "",
   ensureTokenIsValidMiddleware,
