@@ -11,8 +11,7 @@ import "express-async-errors";
 const createLoginService = async (
   loginData: ILoginRequest
 ): Promise<string> => {
-  console.log(loginData.email);
-
+  
   const queryString: string = `
 SELECT
     *
@@ -28,7 +27,6 @@ WHERE
   };
 
   const queryResult: IUserResultWithPassword = await client.query(queryConfig);
-  console.log(queryResult);
 
   if (queryResult.rowCount === 0) {
     throw new AppError("Wrong email or password", 401);

@@ -4,16 +4,12 @@ import {
 } from "../../interfaces/users.interfaces";
 import { client } from "../../database";
 import format from "pg-format";
-import { createUserSchema } from "../../schemas/users.schemas";
-import { hashSync } from "bcryptjs";
+import { createUserSchema, returnUserSchemaWithoutPassword } from "../../schemas/users.schemas";
 
 const createUsersService = async (
   userData: IUserRequest
 ): Promise<IUserWithoutPassword> => {
   const validatedData = createUserSchema.parse(userData);
-
-  const hashePass = hashSync(validatedData.password, 10);
-  validatedData.password = hashePass;
 
   const queryString: string = format(
     `
@@ -28,9 +24,8 @@ const createUsersService = async (
 
   const queryResult = await client.query(queryString);
 
-  const newUser = queryResult.rows[0];
-  delete newUser.password;
-
+  const newUser = returnUserSchemaWithoutPassword.parse(queryResult.rows[0])
+  
   return newUser;
 };
 export default createUsersService;

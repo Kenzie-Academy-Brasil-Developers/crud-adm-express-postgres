@@ -1,9 +1,10 @@
 import { QueryConfig, QueryResult } from "pg";
 import format from "pg-format";
 import { client } from "../../database";
-import { IUser } from "../../interfaces/users.interfaces";
+import { IUserWithoutPassword } from "../../interfaces/users.interfaces";
+import { returnUserSchemaWithoutPassword } from "../../schemas/users.schemas";
 
-const recoverUserService = async (userId: number): Promise<IUser> => {
+const recoverUserService = async (userId: number): Promise<IUserWithoutPassword> => {
   const queryString: string = `
     UPDATE
         users
@@ -23,7 +24,7 @@ const recoverUserService = async (userId: number): Promise<IUser> => {
   const query: string = format(
     `
     SELECT
-    "id","name","email","admin","active"
+        *
     FROM
         users
     WHERE 
@@ -33,7 +34,7 @@ const recoverUserService = async (userId: number): Promise<IUser> => {
 
   const queryResult: QueryResult = await client.query(query);
 
-  const user: IUser = queryResult.rows[0];
+  const user = returnUserSchemaWithoutPassword.parse(queryResult.rows[0])
 
   return user;
 };

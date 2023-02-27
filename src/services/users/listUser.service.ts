@@ -1,13 +1,14 @@
 import { QueryResult } from "pg";
 import format from "pg-format";
 import { client } from "../../database";
-import { IUser } from "../../interfaces/users.interfaces";
+import { IUserWithoutPassword } from "../../interfaces/users.interfaces";
+import { returnUserSchemaWithoutPassword } from "../../schemas/users.schemas";
 
-const listUserService = async (userId: number): Promise<IUser> => {
+const listUserService = async (userId: number): Promise<IUserWithoutPassword> => {
   const query: string = format(
     `
     SELECT
-    "id","name","email","admin","active"
+    *
     FROM
         users
     WHERE 
@@ -17,7 +18,7 @@ const listUserService = async (userId: number): Promise<IUser> => {
 
   const queryResult: QueryResult = await client.query(query);
 
-  const user: IUser = queryResult.rows[0];
+  const user = returnUserSchemaWithoutPassword.parse(queryResult.rows[0])
 
   return user;
 };

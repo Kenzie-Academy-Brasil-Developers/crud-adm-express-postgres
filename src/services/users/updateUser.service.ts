@@ -1,14 +1,14 @@
 import format from "pg-format";
 import { client } from "../../database";
 import { AppError } from "../../errors";
-import { IUser } from "../../interfaces/users.interfaces";
-import { updateUserSchema } from "../../schemas/users.schemas";
+import { IUserWithoutPassword } from "../../interfaces/users.interfaces";
+import { returnUserSchemaWithoutPassword, updateUserSchema } from "../../schemas/users.schemas";
 import "express-async-errors";
 
 const updateUserService = async (
   userId: number,
   reqBody: any
-): Promise<IUser> => {
+): Promise<IUserWithoutPassword> => {
   if (Object.keys(reqBody).length === 0) {
     throw new AppError("Expected keys: name, email, password");
   }
@@ -43,17 +43,17 @@ const updateUserService = async (
 
   await client.query(query);
 
-  const user = await client.query(
+  const queryResult = await client.query(
     format(
       `
-        SELECT "id","name","email","admin","active"
+        SELECT *
         FROM users 
         WHERE id = %L`,
       [userId]
     )
   );
-
-  return user.rows[0];
+  const user = returnUserSchemaWithoutPassword.parse(queryResult.rows[0])
+  return user;
 };
 
 export default updateUserService;
