@@ -9,7 +9,7 @@ const ensureOwnerMiddleware = async (
   const auth = req.user;
 
   if (!auth.admin) {
-    throw new AppError("You dont have permission to acess", 403);
+    throw new AppError("Insufficient Permission", 403);
   }
 
   return next();
