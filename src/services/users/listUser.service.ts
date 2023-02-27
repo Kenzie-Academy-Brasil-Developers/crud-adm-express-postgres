@@ -7,7 +7,7 @@ const listUserService = async (userId: number): Promise<IUser> => {
   const query: string = format(
     `
     SELECT
-       *
+    "id","name","email","admin","active"
     FROM
         users
     WHERE 
