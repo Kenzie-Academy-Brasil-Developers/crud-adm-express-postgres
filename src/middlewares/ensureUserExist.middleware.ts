@@ -3,6 +3,7 @@ import { QueryResult } from "pg";
 import format from "pg-format";
 import { client } from "../database";
 import { AppError } from "../errors";
+import "express-async-errors";
 
 const ensureUserExistMiddleware = async (
   req: Request,

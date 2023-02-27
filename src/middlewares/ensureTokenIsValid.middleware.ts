@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import "express-async-errors";
 
 const ensureTokenIsValidMiddleware = async (
   req: Request,

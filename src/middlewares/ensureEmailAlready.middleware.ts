@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import format from "pg-format";
 import { client } from "../database";
 import { AppError } from "../errors";
+import "express-async-errors";
 
 const ensureEmailAlreadyMiddleware = async (
   req: Request,

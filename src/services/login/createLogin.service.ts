@@ -6,6 +6,7 @@ import { AppError } from "../../errors";
 import { compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import "express-async-errors";
 
 const createLoginService = async (
   loginData: ILoginRequest

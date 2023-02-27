@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors";
+import "express-async-errors";
 
 const ensureOwnerMiddleware = async (
   req: Request,

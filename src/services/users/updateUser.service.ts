@@ -3,6 +3,7 @@ import { client } from "../../database";
 import { AppError } from "../../errors";
 import { IUser } from "../../interfaces/users.interfaces";
 import { updateUserSchema } from "../../schemas/users.schemas";
+import "express-async-errors";
 
 const updateUserService = async (
   userId: number,
