@@ -4,6 +4,7 @@ import listUsersService from "../services/users/listAllUsers.service";
 import { IUser } from "../interfaces/users.interfaces";
 import listUserService from "../services/users/listUser.service";
 import deleteUserService from "../services/users/deleteUser.service"
+import recoverUserService from "../services/users/recoverUser.service"
 
 const createUsersController = async (
   req: Request,
@@ -49,5 +50,15 @@ const deleteUserController = async (
   return res.status(204).send()
 };
 
+const recoverUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const userId: any = req.user.sub;
 
-export { createUsersController, listUsersController, listUserController, deleteUserController};
+  const user = await recoverUserService(userId);
+
+  return res.json(user);
+};
+
+export { createUsersController, listUsersController, listUserController, deleteUserController, recoverUserController};

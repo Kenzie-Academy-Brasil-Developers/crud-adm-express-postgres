@@ -1,5 +1,4 @@
 import { QueryConfig } from "pg";
-import format from "pg-format";
 import { client } from "../../database";
 
 const deleteUserService = async (userId: number): Promise<void> => {
