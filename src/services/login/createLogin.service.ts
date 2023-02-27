@@ -47,7 +47,7 @@ WHERE
       isActive: queryResult.rows[0].active,
       mail: queryResult.rows[0].email,
     },
-    "secret",
+    process.env.SECRET_KEY!,
     {
       expiresIn: "24h",
       subject: queryResult.rows[0].id.toString(),
