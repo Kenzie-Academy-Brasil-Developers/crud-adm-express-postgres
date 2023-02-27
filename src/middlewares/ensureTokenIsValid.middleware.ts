@@ -21,6 +21,13 @@ const ensureTokenIsValidMiddleware = async (
       throw new AppError(error.message, 401);
     }
 
+    req.user = {
+      admin: decoded.admin,
+      isActive: decoded.isActive,
+      mail: decoded.mail,
+      sub: parseInt(decoded.sub),
+    };
+
     return next();
   });
 };

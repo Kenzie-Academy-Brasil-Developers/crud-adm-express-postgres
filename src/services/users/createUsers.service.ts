@@ -26,7 +26,7 @@ const createUsersService = async (
     "boolean",
     "boolean",
   ];
-  const { name, email, password, admin, active } = userData;
+  const { email, password } = userData;
 
   const hasExpectedKeys = expectedKeys.every((key) =>
     userData.hasOwnProperty(key)
@@ -69,6 +69,7 @@ const createUsersService = async (
   );
   const emailExistsResult = await client.query(emailExistsQuery);
   const emailExists = emailExistsResult.rows[0].exists;
+  
   if (emailExists) {
     throw new AppError("User already exists", 409);
   }

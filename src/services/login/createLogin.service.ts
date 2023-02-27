@@ -27,7 +27,7 @@ WHERE
   };
 
   const queryResult: IUserResultWithPassword = await client.query(queryConfig);
-  console.log(queryResult);
+console.log(queryResult);
 
   if (queryResult.rowCount === 0) {
     throw new AppError("Wrong email or password", 401);
@@ -38,9 +38,6 @@ WHERE
     queryResult.rows[0].password
   );
 
-  console.log("--------");
-  console.log(matchPassword);
-  console.log("--------");
   if (!matchPassword) {
     throw new AppError("Wrong email or password", 401);
   }
@@ -48,6 +45,8 @@ WHERE
   const token: string = jwt.sign(
     {
       admin: queryResult.rows[0].admin,
+      isActive: queryResult.rows[0].active,
+      mail: queryResult.rows[0].email
     },
     "secret",
     {
