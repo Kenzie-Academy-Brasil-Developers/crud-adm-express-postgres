@@ -3,6 +3,7 @@ import createUsersService from "../services/users/createUsers.service";
 import listUsersService from "../services/users/listAllUsers.service";
 import { IUser } from "../interfaces/users.interfaces";
 import listUserService from "../services/users/listUser.service";
+import deleteUserService from "../services/users/deleteUser.service"
 
 const createUsersController = async (
   req: Request,
@@ -30,15 +31,23 @@ const listUserController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  console.log("-------------");
-  console.log(req.user.sub);
-  console.log("--------------");
-
   const userId: any = req.user.sub;
 
-  const users = await listUserService(userId);
+  const user = await listUserService(userId);
 
-  return res.json(users);
+  return res.json(user);
 };
 
-export { createUsersController, listUsersController, listUserController };
+const deleteUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const userId: any = req.user.sub;
+
+  await deleteUserService(userId);
+
+  return res.status(204).send()
+};
+
+
+export { createUsersController, listUsersController, listUserController, deleteUserController};

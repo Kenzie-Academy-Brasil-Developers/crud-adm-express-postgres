@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createUsersController,
+  deleteUserController,
   listUserController,
   listUsersController,
 } from "../controllers/users.controllers";
@@ -15,6 +16,7 @@ userRoutes.get(
   ensureOwnerMiddleware,
   listUsersController
 );
-userRoutes.get("/profile", ensureTokenIsValidMiddleware, listUserController)
+userRoutes.get("/profile", ensureTokenIsValidMiddleware, listUserController);
+userRoutes.delete("/:id", ensureTokenIsValidMiddleware, deleteUserController);
 
 export default userRoutes;
