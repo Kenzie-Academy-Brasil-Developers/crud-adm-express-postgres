@@ -27,7 +27,7 @@ WHERE
   };
 
   const queryResult: IUserResultWithPassword = await client.query(queryConfig);
-console.log(queryResult);
+  console.log(queryResult);
 
   if (queryResult.rowCount === 0) {
     throw new AppError("Wrong email or password", 401);
@@ -46,12 +46,12 @@ console.log(queryResult);
     {
       admin: queryResult.rows[0].admin,
       isActive: queryResult.rows[0].active,
-      mail: queryResult.rows[0].email
+      mail: queryResult.rows[0].email,
     },
     "secret",
     {
       expiresIn: "24h",
-      subject: queryResult.rows[0].id.toString()
+      subject: queryResult.rows[0].id.toString(),
     }
   );
 

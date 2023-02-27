@@ -14,9 +14,11 @@ const createUserSchema = z.object({
 const updateUserSchema = z.object({
   name: optional(z.string().min(3).max(20)),
   email: optional(z.string().email()),
-  password: optional(z.string().transform((pass) => {
-    return hashSync(pass, 10);
-  })),
+  password: optional(
+    z.string().transform((pass) => {
+      return hashSync(pass, 10);
+    })
+  ),
 });
 
 const returnUserSchema = createUserSchema.extend({

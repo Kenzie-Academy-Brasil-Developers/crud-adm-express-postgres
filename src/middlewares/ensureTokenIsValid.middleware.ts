@@ -25,8 +25,8 @@ const ensureTokenIsValidMiddleware = async (
       admin: decoded.admin,
       isActive: decoded.isActive,
       mail: decoded.mail,
-      sub: parseInt(decoded.sub)
-    }
+      sub: parseInt(decoded.sub),
+    };
 
     return next();
   });
